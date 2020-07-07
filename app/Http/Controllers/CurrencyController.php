@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Currency;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CurrencyController extends Controller
 {
@@ -13,12 +14,17 @@ class CurrencyController extends Controller
      * @return RedirectResponse
      */
     public function parse(Request $request){
+        //change format date
         $getDate = $request->get('date');
         $newDate = date("d-m-Y", strtotime($getDate));
+        //load data from url (XML format)
         $url = Currency::$BASE_URL.$newDate;
         $xml = simplexml_load_file($url);
+        //check duplicate date
         $insert_date = date("Y-m-d", strtotime($xml['Date']));
-        if(!empty($xml) && date("d-m-Y", strtotime($xml['Date'])) == $newDate){
+        $check = Currency::where('date', '=', $insert_date)->get()->count();
+
+        if(!empty($xml) && date("d-m-Y", strtotime($xml['Date'])) == $newDate && $check==0){
             $count = $xml->count();
             for ($i=0; $i<$count; $i++){
                 Currency::insert([
@@ -35,8 +41,9 @@ class CurrencyController extends Controller
         }
         return redirect()->back()->with('danger', "Yes problem with this date!");
     }
-    public function currency(Request $request){
-        return view('currency');
+    public function currency(){
+        $currency = DB::table('currency')->distinct('name')->get(['name', 'valuteID']);
+        return view('currency', compact('currency'));
     }
     public function getCurrency(Request $request){
         $valuteId = $request->get('valute_id');
@@ -44,20 +51,12 @@ class CurrencyController extends Controller
         $to = date("Y-m-d", strtotime($request->get('to')));
         $currencies = Currency::where([
             ['valuteID','=', $valuteId],
-            ['date','>',$from],
-            ['date','<',$to]
-        ])->get();
-        $response = array();
-        foreach($currencies as $currency){
-            $response[] = array(
-                "value" => $currency->value,
-                "date" => $currency->date
-            );
-        }
-
-        return response()->json($response);
+            ['date','>=',$from],
+            ['date','<=',$to]
+        ])->get(['value', 'date']);
+        return view('currency_list', compact('currencies'));
     }
-    public function currencies(Request $request){
+    public function currencies(){
         return view('currencies');
     }
     public function getCurrencies(Request $request){

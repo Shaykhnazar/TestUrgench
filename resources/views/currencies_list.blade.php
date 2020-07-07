@@ -43,7 +43,7 @@
                                     {{$currency->value}}
                                 </td>
                                 <td>
-                                    {{$currency->date}}
+                                    {{date_format($currency->date, 'd-m-Y')}}
                                 </td>
                             </tr>
                         @endforeach

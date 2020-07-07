@@ -33,7 +33,11 @@
                             <div class="form-group">
                                 <label for="valute_id">Value ID</label>
                                 <div>
-                                    <input id="valute_id" class="form-control" type="text" name="valute_id" title="Choose the value ID which need currency valute"/>
+                                    <select id="valute_id" class="form-control" name="valute_id" title="Choose the value ID which need currency valute">
+                                        @foreach($currency as $item)
+                                            <option value="{{$item->valuteID}}">{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">

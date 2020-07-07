@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Currency;
+use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -19,10 +22,11 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
-        return view('home');
+        $dates = DB::table('currency')->distinct('date')->get('date');
+        return view('home', compact('dates'));
     }
 }

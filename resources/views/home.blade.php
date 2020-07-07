@@ -42,6 +42,31 @@
                     </form>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="">
+                        @lang('Add dates list')
+                    </h5>
+                </div>
+                <table class="table text-gray-900">
+                    <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">@lang('Date')</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($dates as $index=>$date)
+                        <tr>
+                            <th scope="row">{{$index+1}}</th>
+                            <td >
+                                {{$date->date }}
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
