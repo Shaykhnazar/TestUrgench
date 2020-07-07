@@ -35,4 +35,40 @@ class CurrencyController extends Controller
         }
         return redirect()->back()->with('danger', "Yes problem with this date!");
     }
+    public function currency(Request $request){
+        return view('currency');
+    }
+    public function getCurrency(Request $request){
+        $valuteId = $request->get('valute_id');
+        $from = date("Y-m-d", strtotime($request->get('from')));
+        $to = date("Y-m-d", strtotime($request->get('to')));
+        $currencies = Currency::where([
+            ['valuteID','=', $valuteId],
+            ['date','>',$from],
+            ['date','<',$to]
+        ])->get();
+        $response = array();
+        foreach($currencies as $currency){
+            $response[] = array(
+                "value" => $currency->value,
+                "date" => $currency->date
+            );
+        }
+
+        return response()->json($response);
+    }
+    public function currencies(Request $request){
+        return view('currencies');
+    }
+    public function getCurrencies(Request $request){
+        $paginate = 10;
+        $from = date("Y-m-d", strtotime($request->get('from')));
+        $to = date("Y-m-d", strtotime($request->get('to')));
+        $currencies = Currency::where([
+            ['date','>',$from],
+            ['date','<',$to]
+        ])->paginate($paginate);
+
+        return view('currencies_list', compact('currencies', 'from', 'to'));
+    }
 }

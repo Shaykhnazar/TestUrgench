@@ -17,11 +17,10 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <!-- Custom styles for datetime picker-->
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-        <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!--Bootstrap styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -38,7 +37,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li><a href="{{route('home')}}">Home</a></li>
+                        <li class="ml-2"><a href="{{route('currency')}}">Currency</a></li>
+                        <li class="ml-2"><a href="{{route('currencies')}}">Currencies List</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -90,12 +91,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
     <script>
-       $(function () {
-           $('#datepicker').datepicker({
-               uiLibrary: 'bootstrap4',
-               dateFormat: 'dd-mm-yyyy'
-           });
-       });
+        $('#datepicker, #datepicker2, #datepicker3, #datepicker4, #datepicker5').each(function () {
+            $(this).datepicker({
+                uiLibrary: 'bootstrap4',
+            });
+        });
         // $('#parse_form').submit(function () {
         //     $(this).hide('#but');
         // });

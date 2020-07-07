@@ -15,10 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth:web')->group(function(){
     Route::get('/parse', 'CurrencyController@parse')->name('parse');
+    Route::get('/currency', 'CurrencyController@currency')->name('currency');
+    Route::get('/currencies', 'CurrencyController@currencies')->name('currencies');
     Route::get('/home', 'HomeController@index')->name('home');
-
 });
 
 Auth::routes();

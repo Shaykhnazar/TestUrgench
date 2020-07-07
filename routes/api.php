@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/currency', 'CurrencyController@getCurrency')->name('get_currency');
+Route::get('/currencies', 'CurrencyController@getCurrencies')->name('get_currencies');

@@ -7,11 +7,6 @@
             <div class="card">
                 <div class="card-header">Parse currency from XML to DB</div>
                 <div class="card-body" >
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <div>
                         @if ($message = Session::get('success'))
                             <div class="alert sm alert-success">
@@ -36,7 +31,7 @@
                     </div>
                     <form action="{{route('parse')}}" method="get" id="parse_form">
                         <div class="form-group">
-                            <label for="date">Date</label>
+                            <label for="datepicker">Date</label>
                             <div >
                                 <input id="datepicker" class="form-control" type="text" name="date" title="Choose the date which need currency valute"/>
                             </div>
